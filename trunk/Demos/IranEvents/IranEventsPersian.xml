@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <XCalendarEvents Version="1.0.0">
   <Event Title="آغاز نوروز" IsVacation="1" XCalendar="PersianCalendar" Day="1" Month="1"/>
   <Event Title="عيد نوروز" IsVacation="1" XCalendar="PersianCalendar" Day="2" Month="1"/>
@@ -138,5 +138,5 @@
   <Event Title="روز وقف" XCalendar="PersianCalendar" Day="16" Month="12"/>
   <Event Title="روز بزرگداشت شهدا، سالروز صدور فرمان حضرت امام خميني -ره- مبني بر تأسيس بنياد شهيد انقلاب اسلامي، 1358 هـ ش" XCalendar="PersianCalendar" Day="22" Month="12"/>
   <Event Title="بمباران شيميايي حلبچه توسط ارتش بعث عراق، 1366 هـ ش" XCalendar="PersianCalendar" Day="25" Month="12"/>
-  <Event Title="روز ملي شدن صنعت نفت ايران، 1329 هـ ش" XCalendar="PersianCalendar" Day="29" Month="12"/>
+  <Event Title="روز ملي شدن صنعت نفت ايران، 1329 هـ ش" IsVacation="1" XCalendar="PersianCalendar" Day="29" Month="12"/>
 </XCalendarEvents>

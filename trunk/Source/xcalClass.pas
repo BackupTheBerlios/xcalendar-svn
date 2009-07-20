@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 (*
 History:
 
+    V1.0.1  / Aug-21-2008   - Fixed: bug with some TXCalendarAstroEvents property declarations
+                            - Minor change in versioning
+
     V1.0.0  / Aug-16-2008   - Initial public release.
 
 *)
@@ -46,6 +49,13 @@ uses
 {$ENDIF}
   SysConst,
   xcalXML;
+
+  
+const
+  XCAL_MAJ_VER = 1; // Major version nr.
+  XCAL_MIN_VER = 0; // Minor version nr.
+  XCAL_REL_VER = 1; // Release nr.
+
 
 const
   { Days of week are compliant with SysUtils.DayOfWeek }
@@ -552,10 +562,6 @@ uses
   xcalConsts;
 
 const
-  XCAL_MAJ_VER = 1; // Major version nr.
-  XCAL_MIN_VER = 0; // Minor version nr.
-  XCAL_REL_VER = 0; // Release nr.
-
   XCalendarSettingsXMLRootName: string = 'XCalendarSettings'; // XML Root Name
 
 

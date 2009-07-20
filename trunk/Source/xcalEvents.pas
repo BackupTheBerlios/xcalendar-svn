@@ -339,13 +339,6 @@ uses
   xcalD5Utils;
 {$ENDIF}
 
-const
-  XCALEVENTS_MAJ_VER = 1; // Major version nr.
-  XCALEVENTS_MIN_VER = 0; // Minor version nr.
-  XCALEVENTS_REL_VER = 0; // Release nr.
-
-
-
 { TXCalEventItem }
 
 procedure TXCalEventItem.Assign(Source: TPersistent);
@@ -769,9 +762,9 @@ constructor TXCalendarEvents.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FVersion := IntToStr(XCALEVENTS_MAJ_VER) + '.' +
-              IntToStr(XCALEVENTS_MIN_VER) + '.' +
-              IntToStr(XCALEVENTS_REL_VER);
+  FVersion := IntToStr(XCAL_MAJ_VER) + '.' +
+              IntToStr(XCAL_MIN_VER) + '.' +
+              IntToStr(XCAL_REL_VER);
   FXCalendarsOwner := Owner;
   FEvents := TXCalEventCollection.Create(Self);
 end;

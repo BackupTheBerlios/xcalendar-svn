@@ -58,7 +58,7 @@ type
     destructor Destroy; override;
   published
     property Enabled: Boolean read FEnabled write FEnabled default True;
-    property Titles: TXCalAstroEventEquinoxTitles read FTitles;
+    property Titles: TXCalAstroEventEquinoxTitles read FTitles write FTitles;
   end;
 
 
@@ -87,7 +87,7 @@ type
     destructor Destroy; override;
   published
     property Enabled: Boolean read FEnabled write FEnabled default True;
-    property Titles: TXCalAstroEventMoonPhaseTitles read FTitles;
+    property Titles: TXCalAstroEventMoonPhaseTitles read FTitles write FTitles;
   end;
 
 
@@ -120,7 +120,7 @@ type
     destructor Destroy; override;
   published
     property Enabled: Boolean read FEnabled write FEnabled default True;
-    property Titles: TXCalAstroEventEclipseTitles read FTitles;
+    property Titles: TXCalAstroEventEclipseTitles read FTitles write FTitles;
   end;
 
   TXCalAstroEventType = ( aeSpringEquinox,
@@ -160,9 +160,9 @@ type
     procedure FindIntervalEvents(const FromDate, ToDate: TDateTime;
       var EOL: TXCalEventOccurenceList); override;
   published
-    property Equinoxes: TXCalAstroEventEquinoxes read FEquinoxes;
-    property MoonPhases: TXCalAstroEventMoonPhases read FMoonPhases;
-    property Eclipses: TXCalAstroEventEclipses read FEclipses;
+    property Equinoxes: TXCalAstroEventEquinoxes read FEquinoxes write FEquinoxes;
+    property MoonPhases: TXCalAstroEventMoonPhases read FMoonPhases write FMoonPhases;
+    property Eclipses: TXCalAstroEventEclipses read FEclipses write FEclipses;
     property TimeZone: Extended read FTimeZone write FTimeZone;
     property FormatTitles: Boolean read FFormatTitles write FFormatTitles default True;
 

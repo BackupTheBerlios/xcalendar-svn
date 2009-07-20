@@ -210,7 +210,7 @@ The calendars currently implemented are:
   1.3. TAstroPersianCalendar
   ==========================
     The Persian calendar using the astronomical rule to determine common
-      and leap yars: If the vernal equinox occurs before true solar noon,
+      and leap years: If the vernal equinox occurs before true solar noon,
       then the day becomes the first day of the new year, but if it happens
       after the noon, then the next day becomes the first day of the new year.
 
