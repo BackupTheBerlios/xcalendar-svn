@@ -1,0 +1,64 @@
+You can install XCalendar on Delphi versions 5 and above.
+No pre-built package is available. you should create a package for
+yourself. For those who don't want to follow the nonsensical
+instructions, please make sure you do step 4.
+
+Before installing, you might want to take a look at the "Res"
+folder and run "mk.bat" from your desired language folder to
+change the default calendar settings. The resources in "Fa-IR" have
+been installed by default.
+
+
+INSTALLATION INSTRUCTIONS
+=========================
+
+1. Create a new package
+-----------------------
+In the Delphi IDE Bring up the "New Items" Dialpg box ("File"->"New" or
+"File"->"New"->"Other"), choose "Package" and Click OK. You can give a
+description like "XCalendar" to the package in package Options.
+
+2. Save the package in the "Source" folder
+------------------------------------------
+Choose "File"->"Save As..." (or right click on the package base node
+and choose "Save As...") and save the package in the "Source" folder
+located here. Name it something like "XCalendar.dpk" or "XCal_DX.dpk"
+(or .dproj)
+
+3. Add the XCalendar source files to the package
+------------------------------------------------
+Right click on the "Contains" node in the package editor and choose
+"Add...". Click "Browse..." and select every .pas file in the
+"Source" folder and Click "Open".
+
+4. (Delphi 6 and above) Add "DESIGNIDE.dcp" to the "Requires" list
+------------------------------------------------------------------
+Note: This step shouldn't be done in Delphi 5.
+Right click on the "Requires" node in the package editor and choose
+"Add..." or "Add Reference...". Type DESIGNIDE in the "Package name"
+box and click "OK".
+
+5. Compile the package
+----------------------
+In the package editor Click on "Compile" or right click on the
+package base node and choose "Compile".
+if Delphi wants to make a change in the package Choose "Yes".
+
+6. Install the package
+----------------------
+In the package editor Click on "Install" or right click on the
+package base node and choose "Install".
+Click "OK".
+You can save and close the package now.
+
+7. Add the path to the "Source" folder to the Library Path of Delphi
+--------------------------------------------------------------------
+Choose "Tools"->"Environment Options..." and go to the "Library" tab
+(or "Tools"->"Options..." then the node "Library - Win32").
+Click on the "..." button at "Library Path" and add the path of the
+"Source" folder to the list.
+Click "OK" -> "OK"
+
+XCalendar components are available in the "XCalendar" tab/group
+in the component palette and the database fields are available
+in the "New Field" dialog box of the Fields Editor.

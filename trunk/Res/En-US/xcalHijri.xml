@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCalendarSettings Version="1.0.0" ClassName="THijriCalendar">
+  <FormatSettings>
+    <DecimalSeparator value="."/>
+    <DateSeparator value="/"/>
+    <TimeSeparator value=":"/>
+    <ShortDateFormat value="M/d/yyyy"/>
+    <LongDateFormat value="dddd, MMMM dd, yyyy"/>
+    <TimeAMString value="AM"/>
+    <TimePMString value="PM"/>
+    <ShortTimeFormat value="h:mm AMPM"/>
+    <LongTimeFormat value="h:mm:ss AMPM"/>
+    <ShortMonthNames>
+      <Item value="Muharram"/>
+      <Item value="Safar"/>
+      <Item value="Rabi I"/>
+      <Item value="Rabi II"/>
+      <Item value="Jumada I"/>
+      <Item value="Jumada II"/>
+      <Item value="Rajab"/>
+      <Item value="Shaaban"/>
+      <Item value="Ramadan"/>
+      <Item value="Shawwal"/>
+      <Item value="Dhul-Qida"/>
+      <Item value="Dhul-Hijja"/>
+    </ShortMonthNames>
+    <LongMonthNames>
+      <Item value="Muharram"/>
+      <Item value="Safar"/>
+      <Item value="Rabi al-Awwal"/>
+      <Item value="Rabi al-Sani"/>
+      <Item value="Jumada al-Awwal"/>
+      <Item value="Jumada al-Sani"/>
+      <Item value="Rajab"/>
+      <Item value="Shaaban"/>
+      <Item value="Ramadan"/>
+      <Item value="Shawwal"/>
+      <Item value="Dhul-Qida"/>
+      <Item value="Dhul-Hijja"/>
+    </LongMonthNames>
+    <ShortDayNames>
+      <Item value="1"/>
+      <Item value="2"/>
+      <Item value="3"/>
+      <Item value="4"/>
+      <Item value="5"/>
+      <Item value="Jm"/>
+      <Item value="Sb"/>
+    </ShortDayNames>
+    <LongDayNames>
+      <Item value="Yaum al-Ahad"/>
+      <Item value="Yaum al-Ithnayna"/>
+      <Item value="Yaum ath-Thalatha'"/>
+      <Item value="Yaum al-Arba'a'"/>
+      <Item value="Yaum al-Hamis"/>
+      <Item value="Yaum al-Jum'a"/>
+      <Item value="Yaum as-Sabt"/>
+    </LongDayNames>
+    <TwoDigitYearCenturyWindow value="50"/>
+  </FormatSettings>
+  <WeekRule value="0"/>
+  <WeekStartDay value="7"/>
+</XCalendarSettings>

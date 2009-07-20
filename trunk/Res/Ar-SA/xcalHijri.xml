@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCalendarSettings Version="1.0.0" ClassName="THijriCalendar">
+  <FormatSettings>
+    <DecimalSeparator value="."/>
+    <DateSeparator value="/"/>
+    <TimeSeparator value=":"/>
+    <ShortDateFormat value="dd/MM/yyyy"/>
+    <LongDateFormat value="dd MMMM, yyyy"/>
+    <TimeAMString value="ص"/>
+    <TimePMString value="م"/>
+    <ShortTimeFormat value="hh:mm AMPM"/>
+    <LongTimeFormat value="hh:mm:ss AMPM"/>
+    <ShortMonthNames>
+      <Item value="محرم"/>
+      <Item value="صفر"/>
+      <Item value="ربيع الاول"/>
+      <Item value="ربيع الثاني"/>
+      <Item value="جمادى الاولى"/>
+      <Item value="جمادى الثانية"/>
+      <Item value="رجب"/>
+      <Item value="شعبان"/>
+      <Item value="رمضان"/>
+      <Item value="شوال"/>
+      <Item value="ذو القعدة"/>
+      <Item value="ذو الحجة"/>
+    </ShortMonthNames>
+    <LongMonthNames>
+      <Item value="محرم"/>
+      <Item value="صفر"/>
+      <Item value="ربيع الاول"/>
+      <Item value="ربيع الثاني"/>
+      <Item value="جمادى الاولى"/>
+      <Item value="جمادى الثانية"/>
+      <Item value="رجب"/>
+      <Item value="شعبان"/>
+      <Item value="رمضان"/>
+      <Item value="شوال"/>
+      <Item value="ذو القعدة"/>
+      <Item value="ذو الحجة"/>
+    </LongMonthNames>
+    <ShortDayNames>
+      <Item value="الاحد"/>
+      <Item value="الاثنين"/>
+      <Item value="الثلاثاء"/>
+      <Item value="الاربعاء"/>
+      <Item value="الخميس"/>
+      <Item value="الجمعة"/>
+      <Item value="السبت"/>
+    </ShortDayNames>
+    <LongDayNames>
+      <Item value="الاحد"/>
+      <Item value="الاثنين"/>
+      <Item value="الثلاثاء"/>
+      <Item value="الاربعاء"/>
+      <Item value="الخميس"/>
+      <Item value="الجمعة"/>
+      <Item value="السبت"/>
+    </LongDayNames>
+    <TwoDigitYearCenturyWindow value="50"/>
+  </FormatSettings>
+  <WeekRule value="0"/>
+  <WeekStartDay value="7"/>
+</XCalendarSettings>
