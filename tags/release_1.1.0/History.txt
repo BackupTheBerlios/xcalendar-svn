@@ -1,0 +1,12 @@
+XCalendar History:
+
+    V1.1.0  / Jun-10-2009   - Added: Delphi 2009 and Unicode string compatibility
+                            - Added: "Enabled" property to TXCalendarAggregateEvents Items
+                            - Added: Installation packages for several versions of Delphi
+                            - Fixed: bug with TXCalendar setting-change-notification methods (Totally removed)
+                            - Changed: include file xcalDefs.inc
+
+    V1.0.1  / Aug-21-2008   - Fixed: bug with some TXCalendarAstroEvents property declarations
+                            - Minor change in versioning
+
+    V1.0.0  / Aug-16-2008   - Initial public release.

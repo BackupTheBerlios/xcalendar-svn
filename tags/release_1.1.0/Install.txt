@@ -1,0 +1,43 @@
+You can install XCalendar on Delphi versions 5 and above.
+If you have another version of XCalendar installed, you should
+remove it before installing the new one. (Use "Component"->
+"Install Packages..." dialog box)
+
+Before installing, you might want to take a look at the "Res"
+folder and run "mk.bat" from your desired language folder to
+change the default calendar settings. The resources in "Fa-IR"
+have been installed by default.
+
+
+INSTALLATION INSTRUCTIONS
+=========================
+
+1. Open the package appropriate to your version of Delphi
+---------------------------------------------------------
+In the Delphi IDE, open the package (.dpk file) appropriate to your
+version of Delphi. The packages are located in the "Source" folder.
+Open XCalendar_Dx.dpk where x is your Delphi version.
+
+2. Compile the package
+----------------------
+In the package editor Click on "Compile" or right click on the
+package base node and choose "Compile".
+
+3. Install the package
+----------------------
+In the package editor Click on "Install" or right click on the
+package base node and choose "Install".
+Click "OK".
+You can close the package now.
+
+4. Add the path to the "Source" folder to the Library Path of Delphi
+--------------------------------------------------------------------
+Choose "Tools"->"Environment Options..." and go to the "Library" tab
+(or "Tools"->"Options..." then the node "Library - Win32").
+Click on the "..." button at "Library Path" and add the path of the
+"Source" folder to the list.
+Click "OK" -> "OK"
+
+XCalendar components are available in the "XCalendar" tab/group
+in the component palette and the database fields are available
+in the "New Field" dialog box of the Fields Editor.

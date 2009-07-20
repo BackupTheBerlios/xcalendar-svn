@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XCalendarSettings Version="1.0.0" ClassName="TGregorianCalendar">
+  <FormatSettings>
+    <DecimalSeparator value="."/>
+    <DateSeparator value="/"/>
+    <TimeSeparator value=":"/>
+    <ShortDateFormat value="dd/MM/yyyy"/>
+    <LongDateFormat value="dd MMMM, yyyy"/>
+    <TimeAMString value="ص"/>
+    <TimePMString value="م"/>
+    <ShortTimeFormat value="hh:mm AMPM"/>
+    <LongTimeFormat value="hh:mm:ss AMPM"/>
+    <ShortMonthNames>
+      <Item value="يناير"/>
+      <Item value="فبراير"/>
+      <Item value="مارس"/>
+      <Item value="ابريل"/>
+      <Item value="مايو"/>
+      <Item value="يونيو"/>
+      <Item value="يوليو"/>
+      <Item value="اغسطس"/>
+      <Item value="سبتمبر"/>
+      <Item value="اكتوبر"/>
+      <Item value="نوفمبر"/>
+      <Item value="ديسمبر"/>
+    </ShortMonthNames>
+    <LongMonthNames>
+      <Item value="يناير"/>
+      <Item value="فبراير"/>
+      <Item value="مارس"/>
+      <Item value="ابريل"/>
+      <Item value="مايو"/>
+      <Item value="يونيو"/>
+      <Item value="يوليو"/>
+      <Item value="اغسطس"/>
+      <Item value="سبتمبر"/>
+      <Item value="اكتوبر"/>
+      <Item value="نوفمبر"/>
+      <Item value="ديسمبر"/>
+    </LongMonthNames>
+    <ShortDayNames>
+      <Item value="الاحد"/>
+      <Item value="الاثنين"/>
+      <Item value="الثلاثاء"/>
+      <Item value="الاربعاء"/>
+      <Item value="الخميس"/>
+      <Item value="الجمعة"/>
+      <Item value="السبت"/>
+    </ShortDayNames>
+    <LongDayNames>
+      <Item value="الاحد"/>
+      <Item value="الاثنين"/>
+      <Item value="الثلاثاء"/>
+      <Item value="الاربعاء"/>
+      <Item value="الخميس"/>
+      <Item value="الجمعة"/>
+      <Item value="السبت"/>
+    </LongDayNames>
+    <TwoDigitYearCenturyWindow value="50"/>
+  </FormatSettings>
+  <WeekRule value="0"/>
+  <WeekStartDay value="1"/>
+</XCalendarSettings>
