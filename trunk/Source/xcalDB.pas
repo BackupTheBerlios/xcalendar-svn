@@ -42,13 +42,10 @@ type
   TXcalDateTimeField = class(TDateTimeField)
   private
     FXCalendar: TXCalendar;
-    procedure XCalendarSettingsChanged(Sender: TObject);
     procedure SetXCalendar(const Value: TXCalendar);
   protected
     procedure GetText(var Text: string; DisplayText: Boolean); override;
     procedure SetAsString(const Value: string); override;
-  public
-    destructor Destroy; override;
   published
     property XCalendar: TXCalendar read FXCalendar write SetXCalendar;
   end;
@@ -68,7 +65,6 @@ type
   TXCalSQLTimeStampField = class(TSQLTimeStampField)
   private
     FXCalendar: TXCalendar;
-    procedure XCalendarSettingsChanged(Sender: TObject);
     procedure SetXCalendar(const Value: TXCalendar);
 
     function InternalSQLTimeStampToStr(const Format: string; DateTime: TSQLTimeStamp): string;
@@ -78,8 +74,6 @@ type
     procedure GetText(var Text: string; DisplayText: Boolean); override;
     procedure SetAsString(const Value: string); override;
     procedure SetVarValue(const Value: Variant); override;
-  public
-    destructor Destroy; override;
   published
     property XCalendar: TXCalendar read FXCalendar write SetXCalendar;
   end;
@@ -96,18 +90,9 @@ uses
 
 { TxcalDateTimeField }
 
-procedure TXcalDateTimeField.XCalendarSettingsChanged(Sender: TObject);
-begin
-  PropertyChanged(False);
-end;
-
 procedure TXcalDateTimeField.SetXCalendar(const Value: TXCalendar);
 begin
-  if Assigned(FXCalendar) then
-    FXCalendar.RemoveNotify(XCalendarSettingsChanged);
-
   FXCalendar := Value;
-  FXCalendar.AddNotify(XCalendarSettingsChanged);
   PropertyChanged(False);
 end;
 
@@ -145,7 +130,7 @@ begin
     inherited;
     Exit;
   end;
-  
+
   if Value = '' then Clear else
   begin
     case DataType of
@@ -156,15 +141,6 @@ begin
     end;
     SetAsDateTime(DateTime);
   end;
-end;
-
-
-destructor TXcalDateTimeField.Destroy;
-begin
-  if Assigned(FXCalendar) then
-    FXCalendar.RemoveNotify(XCalendarSettingsChanged);
-
-  inherited;
 end;
 
 { TXcalDateField }
@@ -278,25 +254,8 @@ end;
 
 procedure TXCalSQLTimeStampField.SetXCalendar(const Value: TXCalendar);
 begin
-  if Assigned(FXCalendar) then
-    FXCalendar.RemoveNotify(XCalendarSettingsChanged);
-
   FXCalendar := Value;
-  FXCalendar.AddNotify(XCalendarSettingsChanged);
   PropertyChanged(False);
-end;
-
-procedure TXCalSQLTimeStampField.XCalendarSettingsChanged(Sender: TObject);
-begin
-  PropertyChanged(False);
-end;
-
-destructor TXCalSQLTimeStampField.Destroy;
-begin
-  if Assigned(FXCalendar) then
-    FXCalendar.RemoveNotify(XCalendarSettingsChanged);
-
-  inherited;
 end;
 
 procedure TXCalSQLTimeStampField.SetVarValue(const Value: Variant);

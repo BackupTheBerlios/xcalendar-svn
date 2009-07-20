@@ -22,15 +22,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 
 }
 
-(*
-History:
-
-    V1.0.1  / Aug-21-2008   - Fixed: bug with some TXCalendarAstroEvents property declarations
-                            - Minor change in versioning
-
-    V1.0.0  / Aug-16-2008   - Initial public release.
-
-*)
 
 unit xcalClass;
 
@@ -53,8 +44,8 @@ uses
   
 const
   XCAL_MAJ_VER = 1; // Major version nr.
-  XCAL_MIN_VER = 0; // Minor version nr.
-  XCAL_REL_VER = 1; // Release nr.
+  XCAL_MIN_VER = 1; // Minor version nr.
+  XCAL_REL_VER = 0; // Release nr.
 
 
 const
@@ -103,9 +94,7 @@ type
 
     FUpdateCount: Integer; { Used when batch updating the settings }
 
-    FNotifyList: array of TNotifyEvent; { The TNotifyEvent procedures to call when a setting is changed }
     procedure FormatSettingsChanged(Sender: TObject);
-
 
     procedure ScanBlanks(const S: string; var Pos: Integer);
     function ScanNumber(const S: string; var Pos: Integer; var Number: Word; var CharCount: Byte): Boolean;
@@ -134,8 +123,9 @@ type
     procedure SetWeekStartDay(const Value: Word);
     procedure SetFormatSettings(FormatSettings: TXCalFormatSettings);
     procedure SetVersion(const Value: string);
+
   protected
-    procedure Changed; { Call this to notify the objects that have registered interest in change notification. }
+    procedure Changed;
 
     { override these to save/load additional settings }
     procedure SaveSettingsToXMLItemChilds(XMLItem: TxcalXMLItem); virtual;
@@ -158,11 +148,6 @@ type
     procedure SaveSettingsToFile(const FileName: string);
     procedure LoadSettingsFromFile(const FileName: string);
     procedure LoadSettingsFromResourceName(Instance: THandle; const ResName: string);
-
-    { Setting-change notifying. These methods act like an OnChange event, but
-      alow for more than one object to register interest in change notification. }
-    procedure AddNotify(NotifyEvent: TNotifyEvent);
-    procedure RemoveNotify(NotifyEvent: TNotifyEvent);
 
     { SysUtils }
     function EncodeDate(Year, Month, Day: Word): TDateTime;
@@ -721,21 +706,8 @@ begin
 end;
 
 procedure TXCalendar.Changed;
-var
-  I: Integer;
-  NotifyEvent: TNotifyEvent;
 begin
-  if not (csLoading in ComponentState) then
-    if (FUpdateCount = 0) then
-      for I := 0 to Length(FNotifyList) - 1 do
-      begin
-        NotifyEvent := FNotifyList[I];
-        try
-          NotifyEvent(Self);
-        except
-          on EAccessViolation do;
-        end;
-      end;
+  //Removed
 end;
 
 procedure TXCalendar.FormatSettingsChanged(Sender: TObject);
@@ -868,7 +840,11 @@ begin
   while (Pos <= Length(S)) and not (S[Pos] in ['0'..'9']) do
   begin
 {$IFDEF Delphi6}
+{$IFDEF Delphi12}
+    if IsLeadChar(S[Pos]) then
+{$ELSE}
     if S[Pos] in LeadBytes then
+{$ENDIF}
       Pos := NextCharIndex(S, Pos)
     else
       Inc(Pos);
@@ -1195,9 +1171,9 @@ var
   var
     N: Integer;
   begin
-    N := SizeOf(Buffer) - BufPos;
+    N := Length(Buffer) - BufPos;
     if N > Count then N := Count;
-    if N <> 0 then Move(P[0], Buffer[BufPos], N);
+    if N <> 0 then Move(P[0], Buffer[BufPos], N * SizeOf(Char));
     Inc(BufPos, N);
   end;
 
@@ -1212,8 +1188,8 @@ var
   var
     NumBuf: array[0..15] of Char;
   begin
-    AppendChars(NumBuf, FormatBuf(NumBuf, SizeOf(NumBuf), Format,
-      SizeOf(Format), [Digits, Number]));
+    AppendChars(NumBuf, FormatBuf(NumBuf, Length(NumBuf), Format,
+      Length(Format), [Digits, Number]));
   end;
 
   procedure AppendFormat(Format: PChar);
@@ -1271,7 +1247,7 @@ var
 
       FormatStr := 'gg';
       if GetDateFormat(GetThreadLocale, DATE_USE_ALT_CALENDAR, @SystemTime,
-        PChar(FormatStr), Buffer, SizeOf(Buffer)) <> 0 then
+        PChar(FormatStr), Buffer, Length(Buffer)) <> 0 then
       begin
         Result := Buffer;
         if Count = 1 then
@@ -1311,7 +1287,7 @@ var
         FormatStr := 'yyyy';
 
       if GetDateFormat(GetThreadLocale, DATE_USE_ALT_CALENDAR, @SystemTime,
-        PChar(FormatStr), Buffer, SizeOf(Buffer)) <> 0 then
+        PChar(FormatStr), Buffer, Length(Buffer)) <> 0 then
       begin
         Result := Buffer;
         if (Count = 1) and (Result[1] = '0') then
@@ -1379,10 +1355,14 @@ var
 {$IFNDEF Delphi6}
         Inc(Format);
 {$ENDIF}
+{$IFDEF Delphi12}
+        if IsLeadChar(Starter) then
+{$ELSE}
         if Starter in LeadBytes then
+{$ENDIF}
         begin
 {$IFDEF Delphi6}
-          AppendChars(Format, StrCharLength(Format));
+          AppendChars(Format, StrCharLength(Format) div SizeOf(Char));
           Format := StrNextChar(Format);
 {$ELSE}
           if Format^ = #0 then Break;
@@ -1458,7 +1438,11 @@ var
               P := Format;
               while P^ <> #0 do
               begin
+{$IFDEF Delphi12}
+                if IsLeadChar(P^) then
+{$ELSE}
                 if P^ in LeadBytes then
+{$ENDIF}
                 begin
 {$IFDEF Delphi6}
                   P := StrNextChar(P);
@@ -1581,7 +1565,11 @@ var
               P := Format;
               while (Format^ <> #0) and (Format^ <> Starter) do
               begin
+{$IFDEF Delphi12}
+                if IsLeadChar(Format^) then
+{$ELSE}
                 if Format^ in LeadBytes then
+{$ENDIF}
 {$IFDEF Delphi6}
                   Format := StrNextChar(Format)
                 else
@@ -2915,39 +2903,39 @@ begin
 
     xi2 := xi.Add;
     xi2.Name := 'DecimalSeparator';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.DecimalSeparator);
+    xi2.Prop['value'] := FFormatSettings.DecimalSeparator;
 
     xi2 := xi.Add;
     xi2.Name := 'DateSeparator';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.DateSeparator);
+    xi2.Prop['value'] := FFormatSettings.DateSeparator;
 
     xi2 := xi.Add;
     xi2.Name := 'TimeSeparator';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.TimeSeparator);
+    xi2.Prop['value'] := FFormatSettings.TimeSeparator;
 
     xi2 := xi.Add;
     xi2.Name := 'ShortDateFormat';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.ShortDateFormat);
+    xi2.Prop['value'] := FFormatSettings.ShortDateFormat;
 
     xi2 := xi.Add;
     xi2.Name := 'LongDateFormat';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.LongDateFormat);
+    xi2.Prop['value'] := FFormatSettings.LongDateFormat;
 
     xi2 := xi.Add;
     xi2.Name := 'TimeAMString';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.TimeAMString);
+    xi2.Prop['value'] := FFormatSettings.TimeAMString;
 
     xi2 := xi.Add;
     xi2.Name := 'TimePMString';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.TimePMString);
+    xi2.Prop['value'] := FFormatSettings.TimePMString;
 
     xi2 := xi.Add;
     xi2.Name := 'ShortTimeFormat';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.ShortTimeFormat);
+    xi2.Prop['value'] := FFormatSettings.ShortTimeFormat;
 
     xi2 := xi.Add;
     xi2.Name := 'LongTimeFormat';
-    xi2.Prop['value'] := AnsiToUtf8(FFormatSettings.LongTimeFormat);
+    xi2.Prop['value'] := FFormatSettings.LongTimeFormat;
 
     xi2 := xi.Add;
     xi2.Name := 'ShortMonthNames';
@@ -2956,7 +2944,7 @@ begin
       begin
         xi3 := xi2.Add;
         xi3.Name := 'Item';
-        xi3.Prop['value'] := AnsiToUtf8(FFormatSettings.ShortMonthNames[I]);
+        xi3.Prop['value'] := FFormatSettings.ShortMonthNames[I];
       end;
 
     xi2 := xi.Add;
@@ -2966,7 +2954,7 @@ begin
       begin
         xi3 := xi2.Add;
         xi3.Name := 'Item';
-        xi3.Prop['value'] := AnsiToUtf8(FFormatSettings.LongMonthNames[I]);
+        xi3.Prop['value'] := FFormatSettings.LongMonthNames[I];
       end;
 
     xi2 := xi.Add;
@@ -2976,7 +2964,7 @@ begin
       begin
         xi3 := xi2.Add;
         xi3.Name := 'Item';
-        xi3.Prop['value'] := AnsiToUtf8(FFormatSettings.ShortDayNames[I]);
+        xi3.Prop['value'] := FFormatSettings.ShortDayNames[I];
       end;
 
     xi2 := xi.Add;
@@ -2986,7 +2974,7 @@ begin
       begin
         xi3 := xi2.Add;
         xi3.Name := 'Item';
-        xi3.Prop['value'] := AnsiToUtf8(FFormatSettings.LongDayNames[I]);
+        xi3.Prop['value'] := FFormatSettings.LongDayNames[I];
       end;
 
     xi2 := xi.Add;
@@ -3015,39 +3003,39 @@ begin
 
     I := xi.Find('DecimalSeparator');
     if I >= 0 then
-      FFormatSettings.DecimalSeparator := Utf8ToAnsi(xi.Items[I].Prop['value'])[1];
+      FFormatSettings.DecimalSeparator := xi.Items[I].Prop['value'][1];
 
     I := xi.Find('DateSeparator');
     if I >= 0 then
-      FFormatSettings.DateSeparator := Utf8ToAnsi(xi.Items[I].Prop['value'])[1];
+      FFormatSettings.DateSeparator := xi.Items[I].Prop['value'][1];
 
     I := xi.Find('TimeSeparator');
     if I >= 0 then
-      FFormatSettings.TimeSeparator := Utf8ToAnsi(xi.Items[I].Prop['value'])[1];
+      FFormatSettings.TimeSeparator := xi.Items[I].Prop['value'][1];
 
     I := xi.Find('ShortDateFormat');
     if I >= 0 then
-      FFormatSettings.ShortDateFormat := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.ShortDateFormat := xi.Items[I].Prop['value'];
 
     I := xi.Find('LongDateFormat');
     if I >= 0 then
-      FFormatSettings.LongDateFormat := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.LongDateFormat := xi.Items[I].Prop['value'];
 
     I := xi.Find('TimeAMString');
     if I >= 0 then
-      FFormatSettings.TimeAMString := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.TimeAMString := xi.Items[I].Prop['value'];
 
     I := xi.Find('TimePMString');
     if I >= 0 then
-      FFormatSettings.TimePMString := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.TimePMString := xi.Items[I].Prop['value'];
 
     I := xi.Find('ShortTimeFormat');
     if I >= 0 then
-      FFormatSettings.ShortTimeFormat := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.ShortTimeFormat := xi.Items[I].Prop['value'];
 
     I := xi.Find('LongTimeFormat');
     if I >= 0 then
-      FFormatSettings.LongTimeFormat := Utf8ToAnsi(xi.Items[I].Prop['value']);
+      FFormatSettings.LongTimeFormat := xi.Items[I].Prop['value'];
 
     FFormatSettings.ShortMonthNames.Clear;
     I := xi.Find('ShortMonthNames');
@@ -3058,7 +3046,7 @@ begin
       FFormatSettings.ShortMonthNames.BeginUpdate;
       try
         for I := 0 to C - 1 do
-          FFormatSettings.ShortMonthNames.Add(Utf8ToAnsi(xi2.Items[I].Prop['value']));
+          FFormatSettings.ShortMonthNames.Add(xi2.Items[I].Prop['value']);
       finally
         FFormatSettings.ShortMonthNames.EndUpdate;
       end;
@@ -3073,7 +3061,7 @@ begin
       FFormatSettings.LongMonthNames.BeginUpdate;
       try
         for I := 0 to C - 1 do
-          FFormatSettings.LongMonthNames.Add(Utf8ToAnsi(xi2.Items[I].Prop['value']));
+          FFormatSettings.LongMonthNames.Add(xi2.Items[I].Prop['value']);
       finally
         FFormatSettings.LongMonthNames.EndUpdate;
       end;
@@ -3088,7 +3076,7 @@ begin
       FFormatSettings.ShortDayNames.BeginUpdate;
       try
         for I := 0 to C - 1 do
-          FFormatSettings.ShortDayNames.Add(Utf8ToAnsi(xi2.Items[I].Prop['value']));
+          FFormatSettings.ShortDayNames.Add(xi2.Items[I].Prop['value']);
       finally
         FFormatSettings.ShortDayNames.EndUpdate;
       end;
@@ -3103,7 +3091,7 @@ begin
       FFormatSettings.LongDayNames.BeginUpdate;
       try
         for I := 0 to C - 1 do
-          FFormatSettings.LongDayNames.Add(Utf8ToAnsi(xi2.Items[I].Prop['value']));
+          FFormatSettings.LongDayNames.Add(xi2.Items[I].Prop['value']);
       finally
         FFormatSettings.LongDayNames.EndUpdate;
       end;
@@ -3211,34 +3199,6 @@ begin
   finally
     Stream.Free;
   end;
-end;
-
-procedure TXCalendar.AddNotify(NotifyEvent: TNotifyEvent);
-var
-  I, L: Integer;
-begin
-  L := Length(FNotifyList);
-  for I := 0 to L - 1 do
-    if @FNotifyList[I] = @NotifyEvent then
-      Exit;
-
-  SetLength(FNotifyList, L + 1);
-  FNotifyList[L] := NotifyEvent;
-end;
-
-procedure TXCalendar.RemoveNotify(NotifyEvent: TNotifyEvent);
-var
-  I, J, L: Integer;
-begin
-  L := Length(FNotifyList);
-  for I := 0 to L - 1 do
-    if @FNotifyList[I] = @NotifyEvent then
-    begin
-      for J := I to L - 1 do
-        FNotifyList[J] := FNotifyList[J + 1];
-      SetLength(FNotifyList, L - 1);
-      Exit;
-    end;
 end;
 
 procedure TXCalendar.InvalidDateDayError(const AYear, ADayOfYear: Word);

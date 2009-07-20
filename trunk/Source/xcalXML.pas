@@ -67,7 +67,7 @@ type
 
   TxcalXMLReader = class(TObject)
   private
-    FBuffer: PChar;
+    FBuffer: PAnsiChar;
     FBufPos: Integer;
     FBufEnd: Integer;
     FPosition: Int64;
@@ -75,7 +75,7 @@ type
     FStream: TStream;
     procedure SetPosition(const Value: Int64);
     procedure ReadBuffer;
-    procedure ReadItem(var Name, Text: String);
+    procedure ReadItem(var {$IFDEF Delphi12}NameS{$ELSE}Name{$ENDIF}, Text: String);
   public
     constructor Create(Stream: TStream);
     destructor Destroy; override;
@@ -89,10 +89,10 @@ type
   TxcalXMLWriter = class(TObject)
   private
     FAutoIndent: Boolean;
-    FBuffer: String;
+    FBuffer: AnsiString;
     FStream: TStream;
     procedure FlushBuffer;
-    procedure WriteLn(const s: String);
+    procedure WriteLn(const s: AnsiString);
     procedure WriteItem(Item: TxcalXMLItem; Level: Integer = 0);
   public
     constructor Create(Stream: TStream);
@@ -107,6 +107,10 @@ function xcalXMLToStr(const s: String): String;
 
 implementation
 
+{$IFNDEF Delphi6}
+uses
+  xcalD5Utils;
+{$ENDIF}
 
 function xcalStrToXML(const s: String): String;
 const
@@ -128,7 +132,11 @@ begin
   begin
     Result := s;
     for i := lenRes downto 1 do
+{$IFDEF Delphi12}
+      if CharInSet(s[i], SpecChars) then
+{$ELSE}
       if s[i] in SpecChars then
+{$ENDIF}
         if s[i] <> '&' then
           ReplaceChars(Result, i)
         else
@@ -156,7 +164,11 @@ begin
       pRes := PChar(Result) - 1;
     end;
 
+{$IFDEF Delphi12}
+    if CharInSet(s[i], SpecChars) then
+{$ELSE}
     if s[i] in SpecChars then
+{$ENDIF}
     begin
       if (s[i] = '&') and (i <= Length(s) - 5) and (s[i + 1] = 'q') and
         (s[i + 2] = 'u') and (s[i + 3] = 'o') and (s[i + 4] = 't') and (s[i + 5] = ';') then
@@ -221,7 +233,7 @@ begin
         j := i + 3;
         while Result[j] <> ';' do
           Inc(j);
-        h := StrToInt(Copy(Result, i + 2, j - i - 2));
+        h := StrToInt(String(Copy(Result, i + 2, j - i - 2)));
         Delete(Result, i, j - i);
         Result[i] := Chr(h);
         Dec(n, j - i);
@@ -248,7 +260,7 @@ begin
     varDate:
       Result := DateToStr(Value);
 
-    varOleStr, varString, varVariant:
+    varOleStr, varString, varVariant{$IFDEF Delphi12}, varUString{$ENDIF}:
       Result := xcalStrToXML(Value);
 
     varBoolean:
@@ -527,13 +539,16 @@ begin
     RaiseException;
 end;
 
-procedure TxcalXMLReader.ReadItem(var Name, Text: String);
+procedure TxcalXMLReader.ReadItem(var {$IFDEF Delphi12}NameS{$ELSE}Name{$ENDIF}, Text: String);
 var
   c: Integer;
   curpos, len: Integer;
   state: (FindLeft, FindRight, FindComment, Done);
   i, comment: Integer;
-  ps: PChar;
+  ps: PAnsiChar;
+{$IFDEF Delphi12}
+  Name: AnsiString;
+{$ENDIF}
 begin
   Text := '';
   comment := 0;
@@ -567,9 +582,9 @@ begin
         RaiseException
       else
       begin
-        ps[curpos] := Chr(c);
+        ps[curpos] := AnsiChar(Chr(c));
         Inc(curpos);
-        if (curpos = 3) and (Pos('!--', Name) = 1) then
+        if (curpos = 3) and (Pos(AnsiString('!--'), Name) = 1) then
         begin
           state := FindComment;
           comment := 0;
@@ -609,12 +624,15 @@ begin
   if (Name <> '') and (Name[len] = ' ') then
     SetLength(Name, len - 1);
 
-  i := Pos(' ', Name);
+  i := Pos(AnsiString(' '), Name);
   if i <> 0 then
   begin
-    Text := Copy(Name, i + 1, len - i);
+    Text := UTF8Decode(Copy(Name, i + 1, len - i));
     Delete(Name, i, len - i + 1);
   end;
+{$IFDEF Delphi12}
+    NameS := String(Name);
+{$ENDIF}
 end;
 
 procedure TxcalXMLReader.ReadRootItem(Item: TxcalXMLItem);
@@ -682,7 +700,7 @@ begin
   FBuffer := '';
 end;
 
-procedure TxcalXMLWriter.WriteLn(const s: String);
+procedure TxcalXMLWriter.WriteLn(const s: AnsiString);
 begin
   if not FAutoIndent then
     Insert(s, FBuffer, MaxInt) else
@@ -696,7 +714,7 @@ begin
   WriteLn('<?xml version="1.0" encoding="utf-8"?>');
 end;
 
-function Dup(n: Integer): String;
+function Dup(n: Integer): AnsiString;
 begin
   SetLength(Result, n);
   FillChar(Result[1], n, ' ');
@@ -704,11 +722,11 @@ end;
 
 procedure TxcalXMLWriter.WriteItem(Item: TxcalXMLItem; Level: Integer = 0);
 var
-  s: String;
+  s: AnsiString;
 begin
   if (Item.FText <> '') then
   begin
-    s := Item.FText;
+    s := UTF8Encode(Item.FText);
     if (s = '') or (s[1] <> ' ') then
       s := ' ' + s;
   end
@@ -717,16 +735,16 @@ begin
 
   if Item.Count = 0 then
   begin
-    if Item.Value = '' then                       
-      s := s + '/>' 
+    if Item.Value = '' then
+      s := s + '/>'
     else
-      s := s + '>' + Item.Value + '</' + Item.Name + '>' 
-  end 
+      s := s + '>' + UTF8Encode(Item.Value) + '</' + AnsiString(Item.Name) + '>'
+  end
   else
     s := s + '>';
   if not FAutoIndent then
-    s := '<' + Item.Name + s else
-    s := Dup(Level) + '<' + Item.Name + s;
+    s := '<' + AnsiString(Item.Name) + s else
+    s := Dup(Level) + '<' + AnsiString(Item.Name) + s;
   WriteLn(s);
 end;
 
@@ -744,8 +762,8 @@ procedure TxcalXMLWriter.WriteRootItem(RootItem: TxcalXMLItem);
       DoWrite(RootItem[i], Level + 2);
     if RootItem.Count > 0 then
       if not FAutoIndent then
-        WriteLn('</' + RootItem.Name + '>') else
-        WriteLn(Dup(Level) + '</' + RootItem.Name + '>');
+        WriteLn('</' + AnsiString(RootItem.Name) + '>') else
+        WriteLn(Dup(Level) + '</' + AnsiString(RootItem.Name) + '>');
   end;
 
 begin

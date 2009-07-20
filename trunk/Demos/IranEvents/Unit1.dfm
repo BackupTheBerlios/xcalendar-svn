@@ -41,6 +41,9 @@ object Form1: TForm1
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    DesignSize = (
+      825
+      137)
     object btnSave: TButton
       Left = 16
       Top = 16
@@ -79,10 +82,9 @@ object Form1: TForm1
       Associate = Edit1
       Min = 1
       Max = 9999
-      Position = 1387
+      Position = 1388
       TabOrder = 3
       Thousands = False
-      Wrap = False
     end
     object Edit1: TEdit
       Left = 704
@@ -93,7 +95,7 @@ object Form1: TForm1
       BiDiMode = bdRightToLeftNoAlign
       ParentBiDiMode = False
       TabOrder = 4
-      Text = '1387'
+      Text = '1388'
     end
     object ComboBox1: TComboBox
       Left = 96

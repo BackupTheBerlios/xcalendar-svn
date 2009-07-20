@@ -285,11 +285,15 @@ type
   TXCalAggregateEventsCollectionItem = class(TCollectionItem)
   private
     FXCalendarEvents: TCustomXCalendarEvents;
+    FEnabled: Boolean; // Added By Zarghi 'wwww.vwgco.com'
     procedure SetXCalendarEvents(const Value: TCustomXCalendarEvents);
   protected
     function GetDisplayName: string; override;
+  public
+    constructor Create(Collection: TCollection); override;
   published
     property XCalendarEvents: TCustomXCalendarEvents read FXCalendarEvents write SetXCalendarEvents;
+    property Enabled: Boolean read FEnabled write FEnabled default True; // Added By Zarghi 'wwww.vwgco.com'
   end;
 
   TXCalAggregateEventsCollection = class(TCollection)
@@ -373,7 +377,7 @@ begin
   with XMLItem do
   begin
     if FTitle <> '' then
-      Prop['Title'] := AnsiToUtf8(FTitle);
+      Prop['Title'] := FTitle;
     if FFormatTitle then
       Prop['FormatTitle'] := '1';
     if FIsVacation then
@@ -424,7 +428,7 @@ begin
   with XMLItem do
   begin
     if PropExists('Title') then
-      FTitle := Utf8ToAnsi(Prop['Title']);
+      FTitle := Prop['Title'];
     if PropExists('FormatTitle') and TryStrToInt(Prop['FormatTitle'], N) then
       FFormatTitle := (N = 1);
     if PropExists('IsVacation') and TryStrToInt(Prop['IsVacation'], N) then
@@ -1119,6 +1123,14 @@ end;
 
 { TXCalAggregateEventsCollectionItem }
 
+constructor TXCalAggregateEventsCollectionItem.Create(
+  Collection: TCollection);
+begin
+  inherited;
+  
+  FEnabled := True;
+end;
+
 function TXCalAggregateEventsCollectionItem.GetDisplayName: string;
 begin
   if Assigned(FXCalendarEvents) then
@@ -1196,11 +1208,12 @@ var
   EventComponent: TCustomXCalendarEvents;
 begin
   for I := 0 to FObjects.Count - 1 do
-  begin
-    EventComponent := FObjects[I].XCalendarEvents;
-    if Assigned(EventComponent) then
-      EventComponent.FindIntervalEvents(FromDate, ToDate, OccurenceList);
-  end;
+    if FObjects[I].Enabled then // Added By Zarghi 'wwww.vwgco.com'
+    begin
+      EventComponent := FObjects[I].XCalendarEvents;
+      if Assigned(EventComponent) then
+        EventComponent.FindIntervalEvents(FromDate, ToDate, OccurenceList);
+    end;
 end;
 
 procedure TXCalendarAggregateEvents.SetObjects(

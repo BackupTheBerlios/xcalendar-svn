@@ -94,14 +94,6 @@ Special methods:
   utilities.
   }
 
-  procedure AddNotify(NotifyEvent: TNotifyEvent);
-  procedure RemoveNotify(NotifyEvent: TNotifyEvent);
-  {
-  Setting-change notifying. These methods act like an OnChange event, but
-  alow for more than one object to register interest in change notification.
-  These can be used in components using XCalendar calendars.
-  }
-
   
 Date/time methods in addition to / differing from SysUtils/DateUtils routines:
 
@@ -492,6 +484,3 @@ PJ Naughter (http://www.naughter.com) for his nice AA+ library
 NoneForce (http://forum.p30world.com) for many nice source codes
 Amir Rahimi F. (http://www.farsicomponents.com) for the nice database fields idea
 and to everyone that helps in improving this library
-
-adgteq
-Aug-2008

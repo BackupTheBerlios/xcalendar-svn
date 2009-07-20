@@ -94,7 +94,7 @@ begin
   IranAggregateEvents.FindIntervalEvents(dtStart, dtEnd, EOL);
   EOL.SortByDate;
 
-  DrawGrid1.RowCount := Trunc(dtEnd) - Trunc(dtStart) + 1;
+  DrawGrid1.RowCount := Trunc(dtEnd) - Trunc(dtStart) + 2;
   DrawGrid1.ColWidths[0] := 110;
   DrawGrid1.ColWidths[1] := 110;
   DrawGrid1.ColWidths[2] := 110;

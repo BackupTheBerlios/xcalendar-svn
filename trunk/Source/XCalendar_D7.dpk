@@ -1,0 +1,65 @@
+package XCalendar_D7;
+
+{$R 'xcalReg.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'XCalendar'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  dbrtl,
+  vcldb,
+  DESIGNIDE;
+
+contains
+  AACoordinates in 'AACoordinates.pas',
+  AACoordinateTransformation in 'AACoordinateTransformation.pas',
+  AADate in 'AADate.pas',
+  AADynamicalTime in 'AADynamicalTime.pas',
+  AAEarth in 'AAEarth.pas',
+  AAEaster in 'AAEaster.pas',
+  AAEclipses in 'AAEclipses.pas',
+  AAEquationOfTime in 'AAEquationOfTime.pas',
+  AAEquinox in 'AAEquinox.pas',
+  AAFK5 in 'AAFK5.pas',
+  AAInterpolate in 'AAInterpolate.pas',
+  AAMoonPhases in 'AAMoonPhases.pas',
+  AANutation in 'AANutation.pas',
+  AARiseTransitSet in 'AARiseTransitSet.pas',
+  AASidereal in 'AASidereal.pas',
+  AASun in 'AASun.pas',
+  xcalAstroEvents in 'xcalAstroEvents.pas',
+  xcalAstroPersian in 'xcalAstroPersian.pas',
+  xcalClass in 'xcalClass.pas',
+  xcalConsts in 'xcalConsts.pas',
+  xcalDB in 'xcalDB.pas',
+  xcalEvents in 'xcalEvents.pas',
+  xcalGregorian in 'xcalGregorian.pas',
+  xcalHijri in 'xcalHijri.pas',
+  xcalObservedHijri in 'xcalObservedHijri.pas',
+  xcalPersian in 'xcalPersian.pas',
+  xcalReg in 'xcalReg.pas',
+  xcalXML in 'xcalXML.pas';
+
+end.
