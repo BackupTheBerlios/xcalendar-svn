@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCalendarSettings Version="1.0.0" ClassName="TPersianCalendar">
+  <FormatSettings>
+    <DecimalSeparator value="."/>
+    <DateSeparator value="/"/>
+    <TimeSeparator value=":"/>
+    <ShortDateFormat value="M/d/yyyy"/>
+    <LongDateFormat value="dddd, MMMM dd, yyyy"/>
+    <TimeAMString value="AM"/>
+    <TimePMString value="PM"/>
+    <ShortTimeFormat value="h:mm AMPM"/>
+    <LongTimeFormat value="h:mm:ss AMPM"/>
+    <ShortMonthNames>
+      <Item value="Farvardin"/>
+      <Item value="Ordibehesht"/>
+      <Item value="Xordad"/>
+      <Item value="Tir"/>
+      <Item value="Mordad"/>
+      <Item value="Shahrivar"/>
+      <Item value="Mehr"/>
+      <Item value="Aban"/>
+      <Item value="Azar"/>
+      <Item value="Dey"/>
+      <Item value="Bahman"/>
+      <Item value="Esfand"/>
+    </ShortMonthNames>
+    <LongMonthNames>
+      <Item value="Farvardin"/>
+      <Item value="Ordibehesht"/>
+      <Item value="Xordad"/>
+      <Item value="Tir"/>
+      <Item value="Mordad"/>
+      <Item value="Shahrivar"/>
+      <Item value="Mehr"/>
+      <Item value="Aban"/>
+      <Item value="Azar"/>
+      <Item value="Dey"/>
+      <Item value="Bahman"/>
+      <Item value="Esfand"/>
+    </LongMonthNames>
+    <ShortDayNames>
+      <Item value="Ye"/>
+      <Item value="Do"/>
+      <Item value="Se"/>
+      <Item value="Ch"/>
+      <Item value="Pa"/>
+      <Item value="Jo"/>
+      <Item value="Sh"/>
+    </ShortDayNames>
+    <LongDayNames>
+      <Item value="Yek-shanbeh"/>
+      <Item value="Do-shanbeh"/>
+      <Item value="Se-shanbeh"/>
+      <Item value="Char-shanbeh"/>
+      <Item value="Panj-shanbeh"/>
+      <Item value="Jom'eh"/>
+      <Item value="Shanbeh"/>
+    </LongDayNames>
+    <TwoDigitYearCenturyWindow value="50"/>
+  </FormatSettings>
+  <WeekRule value="0"/>
+  <WeekStartDay value="7"/>
+</XCalendarSettings>

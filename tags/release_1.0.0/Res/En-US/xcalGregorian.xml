@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XCalendarSettings Version="1.0.0" ClassName="TGregorianCalendar">
+  <FormatSettings>
+    <DecimalSeparator value="."/>
+    <DateSeparator value="/"/>
+    <TimeSeparator value=":"/>
+    <ShortDateFormat value="M/d/yyyy"/>
+    <LongDateFormat value="dddd, MMMM dd, yyyy"/>
+    <TimeAMString value="AM"/>
+    <TimePMString value="PM"/>
+    <ShortTimeFormat value="h:mm AMPM"/>
+    <LongTimeFormat value="h:mm:ss AMPM"/>
+    <ShortMonthNames>
+      <Item value="Jan"/>
+      <Item value="Feb"/>
+      <Item value="Mar"/>
+      <Item value="Apr"/>
+      <Item value="May"/>
+      <Item value="Jun"/>
+      <Item value="Jul"/>
+      <Item value="Aug"/>
+      <Item value="Sep"/>
+      <Item value="Oct"/>
+      <Item value="Nov"/>
+      <Item value="Dec"/>
+    </ShortMonthNames>
+    <LongMonthNames>
+      <Item value="January"/>
+      <Item value="February"/>
+      <Item value="March"/>
+      <Item value="April"/>
+      <Item value="May"/>
+      <Item value="June"/>
+      <Item value="July"/>
+      <Item value="August"/>
+      <Item value="September"/>
+      <Item value="October"/>
+      <Item value="November"/>
+      <Item value="December"/>
+    </LongMonthNames>
+    <ShortDayNames>
+      <Item value="Sun"/>
+      <Item value="Mon"/>
+      <Item value="Tue"/>
+      <Item value="Wed"/>
+      <Item value="Thu"/>
+      <Item value="Fri"/>
+      <Item value="Sat"/>
+    </ShortDayNames>
+    <LongDayNames>
+      <Item value="Sunday"/>
+      <Item value="Monday"/>
+      <Item value="Tuesday"/>
+      <Item value="Wednesday"/>
+      <Item value="Thursday"/>
+      <Item value="Friday"/>
+      <Item value="Saturday"/>
+    </LongDayNames>
+    <TwoDigitYearCenturyWindow value="50"/>
+  </FormatSettings>
+  <WeekRule value="0"/>
+  <WeekStartDay value="1"/>
+</XCalendarSettings>
